@@ -1,0 +1,450 @@
+import { useState } from "react";
+const menuData = {
+ar: {
+,"ﻣﻄﻌﻢ اﻟﻨﯿﻞ اﻟﺬھﺒﻲ" :restaurantName
+,"أﺻﺎﻟﺔ اﻟﻄﻌﻢ اﻟﻤﺼﺮي ﻣﻨﺬ ١٩٨٥" :tagline
+categories: [
+{
+id: "appetizers",
+,"اﻟﻤﻘﺒﻼت" :name
+icon: " ",
+items: [
+ز وﻋﺪس وﻣﻜﺮوﻧﺔ ﺑﺼﻠﺼﺔ اﻟﻄﻤﺎﻃﻢ واﻟﺨﻞ واﻟﺒﺼﻞ اﻟﻤﻘﻠﻲ" :desc ,"ﻛﺸﺮي ﻣﺼﺮي" :id: 1, name {
+{ id: 2, name: "ﻓﻮل ﻣﺪﻣﺲ", desc: "ﻓﻮل ﺑﺰﯾﺖ اﻟﺰﯾﺘﻮن واﻟﻠﯿﻤﻮن واﻟﺜﻮم وﺟﺮﺟﯿﺮ ﻃﺎزج", pr
+"٣٠ ج" :price ,"ﻓﻼﻓﻞ ﻣﻘﺮﻣﺸﺔ ﺑﺎﻷﻋﺸﺎب اﻟﻄﺎزﺟﺔ ﻣﻊ ﻃﺤﯿﻨﺔ" :desc ,"ﻃﻌﻤﯿﺔ" :id: 3, name {
+{ id: 4, name: "ﺑﺎﺑﺎ ﻏﻨﻮج", desc: "ﺑﺎذﻧﺠﺎن ﻣﺸﻮي ﺑﺎﻟﻄﺤﯿﻨﺔ واﻟﺜﻮم واﻟﻠﯿﻤﻮن", price: "
+ج" :price ,"أوراق ﻋﻨﺐ ﻣﺤﺸﯿﺔ ﺑﺎﻷرز واﻟﺘﻮاﺑﻞ اﻟﻌﻄﺮﯾﺔ" :desc ,"ورق ﻋﻨﺐ" :id: 5, name {
+,]
+,}
+{
+id: "mains",
+,"اﻷﻃﺒﺎق اﻟﺮﺋﯿﺴﯿﺔ" :name
+icon: " ",
+items: [
+ﻛﺒﺎب ﻟﺤﻢ ﺑﺎﻟﺘﻮاﺑﻞ اﻟﻤﺼﺮﯾﺔ ﻋﻠﻰ اﻟﻔﺤﻢ ﻣﻊ أرز وﺳﻼﻃﺔ" :desc ,"ﻛﺒﺎب ﻣﺸﻮي" :id: 6, name {
+{ id: 7, name: "ﺣﻤﺎم ﻣﺤﺸﻲ", desc: "ﺣﻤﺎم ﻣﺼﺮي ﻣﺤﺸﻲ ﺑﺎﻷرز واﻷﻋﺸﺎب ﻣﻊ ﺻﻠﺼﺔ اﻟﺒﺼﻞ", pri
+ﻤﻚ ﺑﻠﻄﻲ ﻃﺎزج ﺑﺘﺘﺒﯿﻠﺔ اﻟﺜﻮم واﻟﻠﯿﻤﻮن واﻟﻜﻤﻮن" :desc ,"ﺳﻤﻚ ﻓﯿﻠﯿﮫ ﻣﺸﻮي" :id: 8, name {
+,"أرﻧﺐ ﻣﻄﺒﻮخ ﺑﺒﻂء ﺑﺎﻟﻄﻤﺎﻃﻢ واﻟﺘﻮاﺑﻞ اﻟﻤﺼﺮﯾﺔ" :desc ,"أرﻧﺐ ﺑﺎﻟﻄﻤﺎﻃﻢ" :id: 9, name {
+ﻮﺧﯿﺔ ﺧﻀﺮاء ﻃﺎزﺟﺔ ﺑﺼﺪر اﻟﻔﺮاخ واﻟﺜﻮم اﻟﻤﺤﻤﺮ" :desc ,"ﻣﻠﻮﺧﯿﺔ ﺑﺎﻟﻔﺮاخ" :id: 10, name {
+,]
+,}
+{
+id: "grills",
+,"اﻟﻤﺸﻮﯾﺎت" :name
+icon: " ",
+items: [
+ج" :price ,"ﻛﻮارع ﻟﺤﻢ ﻣﻄﺒﻮﺧﺔ ﺑﺒﻂء ﻣﻊ اﻟﺤﻤﺺ واﻟﺘﻮاﺑﻞ" :desc ,"ﻛﻮارع" :id: 11, name {
+{ id: 12, name: "ﻛﻔﺘﺔ ﻣﺸﻮﯾﺔ", desc: "ﻛﻔﺘﺔ ﻟﺤﻢ ﺑﻘﺮي ﻣﺸﻮﯾﺔ ﻋﻠﻰ اﻟﻔﺤﻢ ﻣﻊ ﺧﺒﺰ ﺑﻠﺪي", pr
+{ id: 13, name: "ﻓﺮاخ ﻣﺸﻮﯾﺔ", desc: "دﺟﺎﺟﺔ ﻛﺎﻣﻠﺔ ﻣﺘﺒﻠﺔ ﺑﺎﻟﻠﯿﻤﻮن واﻟﺜﻮم واﻟﻜﻤﻮن", pr
+١ ج" :price ,"ﺳﯿﺦ ﻟﺤﻢ ﺿﺄن ﺑﺎﻟﺒﮭﺎرات ﻣﻊ ﺗﻮم وﻃﺤﯿﻨﺔ" :desc ,"ﺳﯿﺦ ﻟﺤﻢ" :id: 14, name {
+,]
+,}
+{
+id: "desserts",
+,"اﻟﺤﻠﻮﯾﺎت" :name
+icon: " ",
+items: [
+{ id: 15, name: "أم ﻋﻠﻲ", desc: "ﺣﻠﻮى ﻣﺼﺮﯾﺔ ﺗﻘﻠﯿﺪﯾﺔ ﺑﺎﻟﻤﻜﺴﺮات واﻟﻜﺮﯾﻤﺔ واﻟﻌﺠﯿﻦ", pr
+٤ ج" :price ,"ﻛﻌﻜﺔ اﻟﺴﻤﯿﺪ ﺑﺎﻟﻘﺸﻄﺔ واﻟﻌﺴﻞ واﻟﻤﻜﺴﺮات" :desc ,"ﺑﺴﺒﻮﺳﺔ" :id: 16, name {
+٧٠ ج" :price ,"ﻛﻨﺎﻓﺔ ﺑﺎﻟﺠﺒﻨﺔ اﻟﻌﻜﺎوي واﻟﻘﻄﺮ واﻟﻔﺴﺘﻖ" :desc ,"ﻛﻨﺎﻓﺔ" :id: 17, name {
+٤ ج" :price ,"ﻋﺠﯿﻦ ﻣﻘﻠﻲ ﺑﺎﻟﻌﺴﻞ اﻷﺑﯿﺾ واﻟﺴﻤﺴﻢ" :desc ,"رﻗﺎﻗﺔ ﺑﺎﻟﻌﺴﻞ" :id: 18, name {
+,]
+,}
+{
+id: "drinks",
+,"اﻟﻤﺸﺮوﺑﺎت" :name
+icon: " ",
+items: [
+{ id: 19, name: "ﺷﺎي ﺑﺎﻟﻨﻌﻨﺎع", desc: "ﺷﺎي أﺣﻤﺮ ﻣﺼﺮي ﺑﺄوراق اﻟﻨﻌﻨﺎع اﻟﻄﺎزﺟﺔ", price
+ج" :price ,"ﻋﺼﯿﺮ ﻗﺼﺐ ﺳﻜﺮ ﻃﺎزج ﺑﺎﻟﻠﯿﻤﻮن واﻟﺰﻧﺠﺒﯿﻞ" :desc ,"ﻋﺼﯿﺮ ﻗﺼﺐ" :id: 20, name {
+,} "٢٢ ج" :price ,"ﻣﺸﺮوب اﻟﻜﺮﻛﺪﯾﮫ اﻟﺴﺎﺧﻦ أو اﻟﺒﺎرد" :desc ,"ﻛﺮﻛﺪﯾﮫ" :id: 21, name {
+,} "٢٠ ج" :price ,"ﻣﺸﺮوب ﻋﺮق اﻟﺴﻮس اﻟﻄﺒﯿﻌﻲ اﻟﻤﻨﻌﺶ" :desc ,"ﻋﺮق ﺳﻮس" :id: 22, name {
+,]
+,}
+,]
+,}
+en: {
+restaurantName: "Golden Nile Restaurant",
+tagline: "Authentic Egyptian Flavors Since 1985",
+categories: [
+{
+id: "appetizers",
+name: "Appetizers",
+icon: " ",
+items: [
+{ id: 1, name: "Koshari", desc: "Rice, lentils & pasta with tomato sauce, vinegar d
+{ id: 2, name: "Ful Medames", desc: "Fava beans with olive oil, lemon, garlic & fre
+{ id: 3, name: "Ta'ameya", desc: "Crispy Egyptian falafel with fresh herbs & tahini
+{ id: 4, name: "Baba Ghanouj", desc: "Smoky grilled eggplant with tahini, garlic &
+{ id: 5, name: "Stuffed Vine Leaves", desc: "Tender vine leaves filled with spiced
+,]
+,}
+{
+id: "mains",
+name: "Main Dishes",
+icon: " ",
+items: [
+{ id: 6, name: "Grilled Kebab", desc: "Spiced minced meat kebab over charcoal with
+{ id: 7, name: "Stuffed Pigeon", desc: "Egyptian pigeon stuffed with rice & herbs i
+{ id: 8, name: "Grilled Fish Fillet", desc: "Fresh Nile tilapia with garlic, lemon
+{ id: 9, name: "Rabbit with Tomato", desc: "Slow-cooked rabbit in tomato & Egyptian
+{ id: 10, name: "Molokhia with Chicken", desc: "Fresh green molokhia with chicken b
+],
+},
+{
+id: "grills",
+name: "Grills",
+icon: " ",
+items: [
+{ id: 11, name: "Lamb Shanks", desc: "Slow-braised lamb shanks with chickpeas & spi
+{ id: 12, name: "Grilled Kofta", desc: "Charcoal-grilled beef kofta with local brea
+{ id: 13, name: "Grilled Chicken", desc: "Whole chicken marinated in lemon, garlic
+{ id: 14, name: "Lamb Skewer", desc: "Tender lamb skewer with spices, garlic sauce
+],
+},
+{
+id: "desserts",
+name: "Desserts",
+icon: " ",
+items: [
+{ id: 15, name: "Om Ali", desc: "Traditional Egyptian bread pudding with cream & mi
+{ id: 16, name: "Basbousa", desc: "Semolina cake with cream, honey & nuts", price:
+{ id: 17, name: "Konafa", desc: "Shredded pastry with white cheese, syrup & pistach
+{ id: 18, name: "Honey Crunch", desc: "Fried dough drizzled with white honey & sesa
+],
+},
+{
+id: "drinks",
+name: "Drinks",
+icon: " ",
+items: [
+{ id: 19, name: "Mint Tea", desc: "Egyptian red tea with fresh mint leaves", { id: 20, name: "Sugarcane Juice", desc: "Fresh sugarcane juice with lemon & { id: 21, name: "Karkade", desc: "Hibiscus drink served hot or cold", price: { id: 22, name: "Liquorice", desc: "Natural refreshing liquorice drink", price: "20
+price:
+ginger
+"22 EG
+],
+},
+],
+},
+};
+export default function RestaurantMenu() {
+const [lang, setLang] = useState("ar");
+const [activeCategory, setActiveCategory] = useState("appetizers");
+const [cart, setCart] = useState([]);
+const [showCart, setShowCart] = useState(false);
+const data = menuData[lang];
+const isAr = lang === "ar";
+const activeItems = data.categories.find((c) => c.id === activeCategory)?.items || [];
+const addToCart = (item) => {
+setCart((prev) => {
+const exists = prev.find((i) => i.id === item.id);
+if (exists) return prev.map((i) => i.id === item.id ? { ...i, qty: i.qty + 1 } : return [...prev, { ...item, qty: 1 }];
+i);
+});
+};
+const removeFromCart = (id) => {
+setCart((prev) => {
+const exists = prev.find((i) => i.id === id);
+if (exists?.qty === 1) return prev.filter((i) => i.id !== id);
+return prev.map((i) => i.id === id ? { ...i, qty: i.qty - 1 } : i);
+});
+};
+const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+return (
+<div dir={isAr ? "rtl" : "ltr"} style={{
+minHeight: "100vh",
+background: "#fdf6ee",
+fontFamily: isAr ? "'Amiri', 'Cairo', serif" : "'Playfair Display', 'Georgia', serif",
+color: "#2c1a0e",
+}}>
+<style>{`
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo
+* { box-sizing: border-box; margin: 0; padding: 0; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f5e6d0; }
+::-webkit-scrollbar-thumb { background: #c8813a; border-radius: 3px; }
+.cat-btn {
+background: transparent;
+border: 2px solid #d4a96a;
+color: #7a4a1e;
+padding: 10px 18px;
+border-radius: 50px;
+cursor: pointer;
+font-size: 14px;
+transition: all 0.2s;
+white-space: nowrap;
+font-family: inherit;
+}
+.cat-btn:hover { background: #f5e0c0; }
+.cat-btn.active { background: #c8813a; color: #fff; border-color: #c8813a; }
+.item-card {
+background: #fff;
+border-radius: 16px;
+padding: 18px;
+border: 1px solid #e8d5b8;
+box-shadow: 0 2px 12px rgba(150,90,30,0.07);
+transition: transform 0.2s, box-shadow 0.2s;
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.item-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(150,90,30
+.add-btn {
+background: #c8813a;
+color: white;
+border: none;
+border-radius: 50px;
+padding: 8px 20px;
+cursor: pointer;
+font-size: 13px;
+font-family: inherit;
+font-weight: 600;
+transition: background 0.2s;
+align-self: flex-start;
+margin-top: auto;
+}
+.add-btn:hover { background: #a66228; }
+.qty-ctrl {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-top: auto;
+}
+.qty-btn {
+background: #f5e0c0;
+border: none;
+border-radius: 50%;
+width: 28px;
+height: 28px;
+cursor: pointer;
+font-size: 16px;
+color: #7a4a1e;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+transition: background 0.2s;
+}
+.qty-btn:hover { background: #e8c890; }
+.cart-overlay {
+position: fixed; inset: 0;
+background: rgba(44,26,14,0.5);
+z-index: 100;
+display: flex;
+align-items: flex-end;
+justify-content: center;
+}
+.cart-drawer {
+background: #fdf6ee;
+width: 100%;
+max-width: 480px;
+max-height: 80vh;
+border-radius: 24px 24px 0 0;
+padding: 24px;
+overflow-y: auto;
+box-shadow: 0 -8px 40px rgba(44,26,14,0.2);
+}
+.lang-btn {
+border: 2px solid #c8813a;
+background: transparent;
+color: #c8813a;
+padding: 6px 16px;
+border-radius: 50px;
+cursor: pointer;
+font-size: 13px;
+font-family: inherit;
+font-weight: 600;
+transition: all 0.2s;
+}
+.lang-btn:hover { background: #c8813a; color: #fff; }
+.cart-fab {
+position: fixed;
+bottom: 24px;
+${isAr ? "left: 24px" : "right: 24px"};
+background: #c8813a;
+color: white;
+border: none;
+border-radius: 50px;
+padding: 14px 22px;
+cursor: pointer;
+font-size: 15px;
+font-family: inherit;
+font-weight: 700;
+box-shadow: 0 4px 20px rgba(200,129,58,0.4);
+display: flex;
+align-items: center;
+gap: 8px;
+transition: transform 0.2s;
+z-index: 50;
+}
+.cart-fab:hover { transform: scale(1.05); }
+.divider {
+border: none;
+border-top: 1px solid #e8d5b8;
+margin: 16px 0;
+}
+`}</style>
+{/* Header */}
+<div style={{
+background: "linear-gradient(135deg, #3d1f0a 0%, #7a4a1e 50%, #c8813a 100%)",
+color: "#fdf6ee",
+padding: "32px 24px 24px",
+textAlign: "center",
+position: "relative",
+>}}
+<div style={{ position: "absolute", top: 16, [isAr ? "left" : "right"]: 16 }}>
+<button className="lang-btn" style={{ color: "#f5e0c0", borderColor: "#f5e0c0" }}
+onClick={() => setLang(lang === "ar" ? "en" : "ar")}>
+}"ﻋﺮﺑﻲ" : "lang === "ar" ? "EN{
+</button>
+</div>
+{/* Decorative ornament */}
+<div style={{ fontSize: 32, marginBottom: 8, opacity: 0.8 }}>☽ ✦ ☾</div>
+<h1 style={{
+fontSize: "2.2rem",
+fontWeight: 700,
+letterSpacing: isAr ? "0.05em" : "0.02em",
+marginBottom: 6,
+textShadow: "0 2px 8px rgba(0,0,0,0.3)",
+>}}
+{data.restaurantName}
+</h1>
+<p style={{ fontSize: "1rem", opacity: 0.85, fontStyle: "italic" }}>{data.tagline}</p
+<div style={{ fontSize: 24, marginTop: 12, opacity: 0.6 }}>― ✦ ―</div>
+</div>
+{/* Category Tabs */}
+<div style={{
+display: "flex",
+gap: 10,
+overflowX: "auto",
+padding: "16px 20px",
+background: "#f9efe0",
+borderBottom: "1px solid #e8d5b8",
+scrollbarWidth: "none",
+}}>
+{data.categories.map((cat) => (
+<button key={cat.id} className={`cat-btn ${activeCategory === cat.id ? "active" : "
+onClick={() => setActiveCategory(cat.id)}>
+{cat.icon} {cat.name}
+</button>
+))}
+</div>
+{/* Menu Items */}
+<div style={{ padding: "20px 16px", maxWidth: 700, margin: "0 auto" }}>
+<h2 style={{
+fontSize: "1.4rem",
+color: "#7a4a1e",
+marginBottom: 18,
+display: "flex",
+alignItems: "center",
+gap: 8,
+}}>
+{data.categories.find(c => c.id === activeCategory)?.icon}{" "}
+{data.categories.find(c => c.id === activeCategory)?.name}
+</h2>
+<div style={{
+display: "grid",
+gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+gap: 16,
+}}>
+{activeItems.map((item) => {
+const inCart = cart.find((i) => i.id === item.id);
+return (
+<div key={item.id} className="item-card">
+<div style={{ display: "flex", justifyContent: "space-between", alignItems: "
+<h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#3d1f0a", flex: 1
+<span style={{
+background: "#f5e0c0",
+color: "#7a4a1e",
+fontWeight: 700,
+fontSize: "0.95rem",
+padding: "3px 10px",
+borderRadius: 50,
+whiteSpace: "nowrap",
+marginRight: isAr ? 8 : 0,
+marginLeft: isAr ? 0 : 8,
+}}>{item.price}</span>
+</div>
+<p style={{ fontSize: "0.88rem", color: "#8a6040", lineHeight: 1.6 }}>{item.d
+{inCart ? (
+<div className="qty-ctrl">
+<button className="qty-btn" onClick={() => removeFromCart(item.id)}>−</bu
+<span style={{ fontWeight: 700, color: "#c8813a", minWidth: 20, textAlign
+<button className="qty-btn" onClick={() => addToCart(item)}>+</button>
+</div>
+( : )
+<button className="add-btn" onClick={() => addToCart(item)}>
+{isAr ? "+ أﺿﻒ ﻟﻠﻄﻠﺐ" : "+ Add to Order"}
+</button>
+})
+</div>
+;)
+})}
+</div>
+</div>
+{/* Footer */}
+<div style={{
+textAlign: "center",
+padding: "24px",
+color: "#a07848",
+fontSize: "0.85rem",
+borderTop: "1px solid #e8d5b8",
+marginTop: 20,
+paddingBottom: 80,
+>}}
+</div>
+<div style={{ marginBottom: 6, fontSize: 20 }}>☽ ✦ ☾</div>
+ً
+ﻻﺧﺘﯿﺎرﻛﻢ ﻣﻄﻌﻢ اﻟﻨﯿﻞ اﻟﺬھﺒﻲ" ? isAr{
+We are honored to serve" : "ﻧﺘﺸﺮف ﺑﺨﺪﻣﺘﻜﻢ — ﺷﻜﺮا
+{/* Cart FAB */}
+{totalItems > 0 && (
+<button className="cart-fab" onClick={() => setShowCart(true)}>
+{isAr ? `اﻟﻄﻠﺐ (${totalItems})` : `Order (${totalItems})`}
+</button>
+})
+{/* Cart Drawer */}
+{showCart && (
+<div className="cart-overlay" onClick={() => setShowCart(false)}>
+<div className="cart-drawer" onClick={(e) => e.stopPropagation()}>
+<div style={{ display: "flex", justifyContent: "space-between", alignItems: "cent
+<h2 style={{ fontSize: "1.3rem", color: "#3d1f0a" }}>
+{isAr ? " ﻃﻠﺒﻚ" : " Your Order"}
+</h2>
+<button onClick={() => setShowCart(false)} style={{
+background: "#f5e0c0", border: "none", borderRadius: "50%",
+width: 32, height: 32, cursor: "pointer", fontSize: 16, color: "#7a4a1e"
+}}>✕</button>
+</div>
+<hr className="divider" />
+{cart.map((item) => (
+<div key={item.id} style={{
+display: "flex", justifyContent: "space-between",
+alignItems: "center", padding: "10px 0", borderBottom: "1px solid #f0dfc0"
+>}}
+<div style={{ flex: 1 }}>
+<div style={{ fontWeight: 600, color: "#3d1f0a" }}>{item.name}</div>
+<div style={{ fontSize: "0.85rem", color: "#a07848" }}>{item.price}</div>
+</div>
+<div className="qty-ctrl" style={{ marginTop: 0 }}>
+<button className="qty-btn" onClick={() => removeFromCart(item.id)}>−</butt
+<span style={{ fontWeight: 700, color: "#c8813a", minWidth: 20, textAlign:
+<button className="qty-btn" onClick={() => addToCart(item)}>+</button>
+</div>
+</div>
+}))
+<hr className="divider" />
+<button style={{
+width: "100%", background: "#c8813a", color: "white",
+border: "none", borderRadius: 50, padding: "14px",
+fontSize: "1rem", fontWeight: 700, cursor: "pointer", fontFamily: "inherit",
+marginTop: 8,
+>}}
+{isAr ? "✓ ﺗﺄﻛﯿﺪ اﻟﻄﻠﺐ" : "✓ Confirm Order"}
+</button>
+</div>
+</div>
+})
+</div>
+;)
+}
